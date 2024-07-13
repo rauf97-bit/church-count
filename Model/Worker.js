@@ -21,6 +21,11 @@ const workerSchema = new Schema({
     DOB: {
         type: String,
         required: true
+    },
+    Department:
+    {
+        type: String,
+        required: true
     }
 });
 
