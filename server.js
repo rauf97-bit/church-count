@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 const http = require('http');
 
 // Register the routes
-const Routes = require('./Routes/RegisterRoute');
+const Routes = require('./Routes/index');
 
 // Cross Origin Resource Sharing
 app.use(cors());
@@ -32,15 +32,17 @@ app.use('/api/v1', Routes);
 
 // Connect to MongoDB
 connectDB();
-mongoose.connection.once('open', () => {
-  console.log('Connected to MongoDB');
+mongoose.connection.once('open', () =>
+{
+    console.log('Connected to MongoDB');
 
-  // Create an HTTP server using Express app
-  const server = http.createServer(app);
+    // Create an HTTP server using Express app
+    const server = http.createServer(app);
 
-  // Start the HTTP server to listen for incoming HTTP and WebSocket connections
-  const PORT = process.env.PORT || 3000;
-  server.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
+    // Start the HTTP server to listen for incoming HTTP and WebSocket connections
+    const PORT = process.env.PORT || 3000;
+    server.listen(PORT, () =>
+    {
+        console.log(`Server running on port ${PORT}`);
+    });
 });
