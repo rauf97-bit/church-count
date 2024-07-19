@@ -28,9 +28,15 @@ const attendanceSchema = new Schema({
         ref: 'Worker',
         required: true
     },
+    Event: {
+        type: Schema.Types.ObjectId,
+        ref: 'Event',
+        required: false
+    },
+
    
    
-});
+}, {timestamps: true });
 
 
 module.exports = mongoose.model('Attendance', attendanceSchema);

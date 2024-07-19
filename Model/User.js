@@ -10,7 +10,11 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    Role: { type: String, enum: ['Member', 'Worker', 'Admin']}, // Add Role field
+    Role: { 
+    type: String, 
+    enum: ['Member', 'Worker', 'Admin'],
+    required: false
+    }, 
     Otp: {
         type: String,
         required: false
