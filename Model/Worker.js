@@ -20,14 +20,20 @@ const workerSchema = new Schema({
     },
     DOB: {
         type: String,
-        required: true
+        required: false
     },
-    Department:
+    Unit:
+    {
+        type: Schema.Types.ObjectId,
+        required: false,
+        ref:'Unit'
+    },
+    Address:
     {
         type: String,
-        required: true
+        required: false
     }
-});
+}, {timestamps: true });
 
 
 module.exports = mongoose.model('Worker', workerSchema);

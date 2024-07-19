@@ -2,14 +2,15 @@ const Worker = require('../Model/Worker');
 const User = require('../Model/User')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const Unit = require('../Model/Unit')
 
 const RegisterWorker = async (req, res) =>
 {
     try
     {
-        const { FirstName, LastName, PhoneNumber, Email, DOB, Department, Password, ConfirmPassword } = req.body;
+        const { FirstName, LastName, PhoneNumber, Email, Unit, Password, ConfirmPassword } = req.body;
 
-        if (!FirstName || !LastName || !PhoneNumber || !Email || !DOB || !Department || !Password || !ConfirmPassword)
+        if (!FirstName || !LastName || !PhoneNumber || !Email || !Unit || !Password || !ConfirmPassword)
         {
             return res.status(400).json("All fields are required");
         }
@@ -35,14 +36,17 @@ const RegisterWorker = async (req, res) =>
                 });
                 // Save the user to the database
                 const savedUser = await newUser.save();
-        
+        const SelectedUnit = await Unit.findOne({ _id : Unit })
+        if(!SelectedUnit)
+        {
+            return res.status(400).json({ message: 'Invalid unit selected' });
+        }
         const newWorker = new Worker({
             FirstName,
             LastName,
             PhoneNumber,
             Email,
-            DOB,
-            Department
+            Unit:SelectedUnit._id
         });
 
         await newWorker.save();
