@@ -97,6 +97,28 @@ const CreateUnit = async(req, res) =>
         
         }
 
+        
+    const GetAllUnits = async(req, res) => 
+        {
+            try
+            {
+                 var UnitExists = await Unit.find().populate('Department');
+                if(!UnitExists)
+                {
+                    return res.status(404).json({message: "No Unit found"});
+                }
+
+                return res.status(200).json({message: "Success", UnitExists})
+            }
+            catch(error)
+            {
+                console.log(error)
+                return res.status(500).json({message: "An error occurred"});
+            }
+        
+        }
+
+
         const GetDepartment = async(req, res) => 
         {
             try
@@ -119,5 +141,25 @@ const CreateUnit = async(req, res) =>
         
         }
 
+        const GetAllDepartments = async(req, res) => 
+            {
+                try
+                { 
+                    var DepartmentExists = await Department.find()
+                    if(!DepartmentExists)
+                    {
+                        return res.status(404).json({message: "No Department found"});
+                    }
+    
+                    return res.status(200).json({message: "Success", DepartmentExists})
+                }
+                catch(error)
+                {
+                    console.log(error)
+                    return res.status(500).json({message: "An error occurred"});
+                }
+            
+            }
 
-        module.exports = { CreateDepartment, CreateUnit, GetUnit, GetDepartment }
+
+        module.exports = { CreateDepartment, CreateUnit, GetUnit, GetDepartment, GetAllUnits, GetAllDepartments }

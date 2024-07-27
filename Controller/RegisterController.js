@@ -2,7 +2,7 @@ const Worker = require('../Model/Worker');
 const User = require('../Model/User')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const Unit = require('../Model/Unit')
+const UnitModel = require('../Model/Unit')
 
 const RegisterWorker = async (req, res) =>
 {
@@ -36,7 +36,7 @@ const RegisterWorker = async (req, res) =>
                 });
                 // Save the user to the database
                 const savedUser = await newUser.save();
-        const SelectedUnit = await Unit.findOne({ _id : Unit })
+        const SelectedUnit = await UnitModel.findById(Unit)
         if(!SelectedUnit)
         {
             return res.status(400).json({ message: 'Invalid unit selected' });
@@ -55,7 +55,7 @@ const RegisterWorker = async (req, res) =>
     } catch (error)
     {
         console.log(error);
-        return res.status(500).json("An error occurred");
+        return res.status(500).json({message:"an error occurred"});
     }
 };
 
