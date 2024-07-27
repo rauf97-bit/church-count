@@ -62,7 +62,7 @@ const markAttendanceLoggedIn = async(req, res) =>
     }
 }
 
-const getAttendanceReport = async(req, res) => {
+const getAttendanceReportByDept = async(req, res) => {
     try {
       const { department, date } = req.params;
       const { page = 1, limit = 10 } = req.query;
@@ -108,4 +108,4 @@ const getAttendanceReport = async(req, res) => {
   }
   
 
-  module.exports = { markAttendanceLoggedIn, getAttendanceReport }
+  module.exports = { markAttendanceLoggedIn, getAttendanceReportByDept }
