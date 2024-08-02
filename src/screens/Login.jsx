@@ -8,13 +8,16 @@
 
 // export default Login
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("")
   const navigate = useNavigate();
-  const handleSubmit = async (e) => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    navigate("/landing")
+  };
   return (
     <div>
       <section className="h-screen overflow-hidden">
@@ -55,7 +58,7 @@ const Login = () => {
                   />
                 </div> */}
 
-                <div className="flex justify-center items-center mb-6">
+                <div className="flex justify-between items-center mb-6">
                   <div className="text-center lg:text-left">
                     <button
                       type="submit"
@@ -64,7 +67,7 @@ const Login = () => {
                       Login
                     </button>
                   </div>
-                  
+                  <p className="text-firstBlue">Don't have an account? <Link className="text-lg font-bold text-firstBlue underline">      Sign Up </Link></p>
                 </div>
               </form>
             </div>
