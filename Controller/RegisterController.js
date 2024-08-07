@@ -65,7 +65,7 @@ const handleWorkerLogin = async (req, res) =>
 {
     const { Email, Password } = req.body;
     if (!Email || !Password) return res.status(400).json({ 'message': 'username and password are required' })
-    const foundUser = await User.findOne({ Email: Email }).populate('Unit').exec();
+    const foundUser = await User.findOne({ Email: Email }).exec();
     console.log(foundUser)
     if (!foundUser) return res.sendStatus(401); //unauthorized
     // evaluate password
@@ -92,7 +92,7 @@ const handleWorkerLogin = async (req, res) =>
             maxAge: 24 * 60 * 60 * 1000
         });
 
-        const worker = await Worker.findOne({ Email: Email }).exec();
+        const worker = await Worker.findOne({ Email: Email }).populate('Unit').exec();
         res.json({ accessToken, user: worker });
     }
 

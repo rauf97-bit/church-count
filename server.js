@@ -9,7 +9,13 @@ const bodyParser = require('body-parser');
 const http = require('http');
 
 // Cross Origin Resource Sharing
-app.use(cors());
+app.use(cors({
+    origin: '*', // Allow any origin
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true // Allow cookies to be sent with requests
+}));
+
 // Register the routes
 const Routes = require('./Routes/index');
 app.use(bodyParser.json());
