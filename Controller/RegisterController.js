@@ -23,21 +23,21 @@ const RegisterWorker = async (req, res) =>
         }
         if (Password !== ConfirmPassword)
         {
-                return res.status(400).json({ message: 'Passwords do not match' });
+            return res.status(400).json({ message: 'Passwords do not match' });
         }
-                // Encrypt password
-                const hashedPwd = await bcrypt.hash(Password, 10);
-                // Create new user
-                const newUser = new User({
-                    Email,
-                    Password: hashedPwd,
-                    Role: 'Worker',
-                    CreatedAt: new Date()
-                });
-                // Save the user to the database
-                const savedUser = await newUser.save();
+        // Encrypt password
+        const hashedPwd = await bcrypt.hash(Password, 10);
+        // Create new user
+        const newUser = new User({
+            Email,
+            Password: hashedPwd,
+            Role: 'Worker',
+            CreatedAt: new Date()
+        });
+        // Save the user to the database
+        const savedUser = await newUser.save();
         const SelectedUnit = await UnitModel.findById(Unit)
-        if(!SelectedUnit)
+        if (!SelectedUnit)
         {
             return res.status(400).json({ message: 'Invalid unit selected' });
         }
@@ -46,7 +46,7 @@ const RegisterWorker = async (req, res) =>
             LastName,
             PhoneNumber,
             Email,
-            Unit:SelectedUnit._id
+            Unit: SelectedUnit._id
         });
 
         await newWorker.save();
@@ -55,53 +55,53 @@ const RegisterWorker = async (req, res) =>
     } catch (error)
     {
         console.log(error);
-        return res.status(500).json({message:"an error occurred"});
+        return res.status(500).json({ message: "an error occurred" });
     }
 };
 
 
 
 const handleWorkerLogin = async (req, res) =>
+{
+    const { Email, Password } = req.body;
+    if (!Email || !Password) return res.status(400).json({ 'message': 'username and password are required' })
+    const foundUser = await User.findOne({ Email: Email }).populate('Unit').exec();
+    console.log(foundUser)
+    if (!foundUser) return res.sendStatus(401); //unauthorized
+    // evaluate password
+    const match = await bcrypt.compare(Password, foundUser.Password);
+
+    if (match && foundUser.Role == "Worker")
     {
-        const { Email, Password } = req.body;
-        if (!Email || !Password) return res.status(400).json({ 'message': 'username and password are required' })
-        const foundUser = await User.findOne({ Email: Email }).exec();
-        console.log(foundUser)
-        if (!foundUser) return res.sendStatus(401); //unauthorized
-        // evaluate password
-        const match = await bcrypt.compare(Password, foundUser.Password);
-    
-        if (match && foundUser.Role == "Worker")
-        {
-            const accessToken = jwt.sign(
-                {
-                    UserInfo: {
-                        userId: foundUser._id,
-                        email: foundUser.Email
-                    }
-                },
-    
-                process.env.ACCESS_TOKEN_WORKER,
-                { expiresIn: '30m' }); 
-    
-            // Set HTTP-only cookie with the token
-            res.cookie("accessToken", accessToken, {
-                httpOnly: true,
-                sameSite: "None", 
-                secure: true, 
-                maxAge: 24 * 60 * 60 * 1000 
-            });
-    
-            const worker = await Worker.findOne({ Email: Email }).exec();
-            res.json({ accessToken, user: worker });
-        }
-    
-        else
-        {
-            res.sendStatus(401);
-        }
+        const accessToken = jwt.sign(
+            {
+                UserInfo: {
+                    userId: foundUser._id,
+                    email: foundUser.Email
+                }
+            },
+
+            process.env.ACCESS_TOKEN_WORKER,
+            { expiresIn: '30m' });
+
+        // Set HTTP-only cookie with the token
+        res.cookie("accessToken", accessToken, {
+            httpOnly: true,
+            sameSite: "None",
+            secure: true,
+            maxAge: 24 * 60 * 60 * 1000
+        });
+
+        const worker = await Worker.findOne({ Email: Email }).exec();
+        res.json({ accessToken, user: worker });
     }
 
+    else
+    {
+        res.sendStatus(401);
+    }
+}
 
 
-module.exports = { RegisterWorker, handleWorkerLogin};
+
+module.exports = { RegisterWorker, handleWorkerLogin };
