@@ -10,15 +10,15 @@ const eventSchema = new Schema({
         type: String,
         required: true
     },
-    
+
     Date: {
-        type: String,
+        type: Date,
         required: true
     },
     Frequency: {
         type: String,
-        required: true
+        required: false
     }
-}, {timestamps: true });
+}, { timestamps: true });
 
 module.exports = mongoose.model('Event', eventSchema);

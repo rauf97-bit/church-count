@@ -163,4 +163,6 @@ const GetAllDepartments = async (req, res) =>
 }
 
 
+
+
 module.exports = { CreateDepartment, CreateUnit, GetUnit, GetDepartment, GetAllUnits, GetAllDepartments }
