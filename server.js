@@ -8,12 +8,10 @@ const connectDB = require('./Config/dbConn');
 const bodyParser = require('body-parser');
 const http = require('http');
 
-// Register the routes
-const Routes = require('./Routes/index');
-
 // Cross Origin Resource Sharing
 app.use(cors());
-
+// Register the routes
+const Routes = require('./Routes/index');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
