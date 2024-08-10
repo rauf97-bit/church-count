@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
 
   // Mock API URLs
 
-  const API_BASE_URL = process.env;
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
   //"https://church-count.onrender.com"; // Replace with your backend API URL
 
   // Load user from localStorage on initial load
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
       setUser(userData);
       localStorage.setItem("user", JSON.stringify(userData));
     } catch (error) {
-      console.error("Error during sign up:", error);
+      //console.error("Error during sign up:", error);
       throw error;
     }
   };
@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
     //   console.log(process.env);
 
-      console.error("Error during login:", error);
+      //console.error("Error during login:", error);
       throw error;
     }
   };
