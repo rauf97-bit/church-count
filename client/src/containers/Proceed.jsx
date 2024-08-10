@@ -5,7 +5,7 @@ const Proceed = ({ text, width }) => {
     <input
       value={text}
       type="submit"
-      className={`px-10 my-2 cursor-pointer py-4 text-2xl ${width} bg-primary rounded-2xl text-center text-white`}
+      className={`px-10 cursor-pointer py-2 text-base ${width} bg-primaryPurple rounded-md text-center text-white`}
     />
   );
 };

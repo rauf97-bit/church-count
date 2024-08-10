@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
 
   // Mock API URLs
 
-  const API_BASE_URL = process.env.REACT_API_BASE_URL;
+  const API_BASE_URL = process.env;
   //"https://church-count.onrender.com"; // Replace with your backend API URL
 
   // Load user from localStorage on initial load

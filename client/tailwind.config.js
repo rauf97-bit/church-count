@@ -16,6 +16,9 @@ module.exports = {
         tertiaryTextColor: "#B3B3B3",
         tertiaryTextColor2: "#F3F3F3"
       },
+      backgroundImage: {
+        'hero-pattern': "url('./assets/images/churchfaded.png')"
+      }
     },
   },
   plugins: [],
