@@ -9,6 +9,7 @@ const RegisterWorker = async (req, res) =>
     try
     {
         const { FirstName, LastName, PhoneNumber, Email, Unit, Password, ConfirmPassword } = req.body;
+        console.log(req.body);
 
         if (!FirstName || !LastName || !PhoneNumber || !Email || !Unit || !Password || !ConfirmPassword)
         {
@@ -19,6 +20,7 @@ const RegisterWorker = async (req, res) =>
         const existingEmail = await Worker.findOne({ Email: Email }).exec()
         if (existingPhoneNumber || existingEmail)
         {
+
             return res.status(400).json({ message: "Email or phone number already exists" });
         }
         if (Password !== ConfirmPassword)
@@ -63,42 +65,54 @@ const RegisterWorker = async (req, res) =>
 
 const handleWorkerLogin = async (req, res) =>
 {
-    const { Email, Password } = req.body;
-    if (!Email || !Password) return res.status(400).json({ 'message': 'username and password are required' })
-    const foundUser = await User.findOne({ Email: Email }).exec();
-    console.log(foundUser)
-    if (!foundUser) return res.sendStatus(401); //unauthorized
-    // evaluate password
-    const match = await bcrypt.compare(Password, foundUser.Password);
-
-    if (match && foundUser.Role == "Worker")
+    try
     {
-        const accessToken = jwt.sign(
-            {
-                UserInfo: {
-                    userId: foundUser._id,
-                    email: foundUser.Email
-                }
-            },
+        const { Email, Password } = req.body;
+        console.log(req.body);
+        if (!Email || !Password) return res.status(400).json({ 'message': 'username and password are required' })
+        const foundUser = await User.findOne({ Email: Email }).exec();
 
-            process.env.ACCESS_TOKEN_WORKER,
-            { expiresIn: '30m' });
+        if (!foundUser) return res.sendStatus(401); //unauthorized
+        // evaluate password
+        const match = await bcrypt.compare(Password, foundUser.Password);
 
-        // Set HTTP-only cookie with the token
-        res.cookie("accessToken", accessToken, {
-            httpOnly: true,
-            sameSite: "None",
-            secure: true,
-            maxAge: 24 * 60 * 60 * 1000
-        });
+        if (match && foundUser.Role == "Worker")
+        {
+            const accessToken = jwt.sign(
+                {
+                    UserInfo: {
+                        userId: foundUser._id,
+                        email: foundUser.Email
+                    }
+                },
 
-        const worker = await Worker.findOne({ Email: Email }).populate('Unit').exec();
-        res.json({ accessToken, user: worker });
+                process.env.ACCESS_TOKEN_WORKER,
+                { expiresIn: '30m' });
+
+            // Set HTTP-only cookie with the token
+            res.cookie("accessToken", accessToken, {
+                httpOnly: true,
+                sameSite: "None",
+                secure: true,
+                maxAge: 24 * 60 * 60 * 1000
+            });
+
+            const worker = await Worker.findOne({ Email: Email }).populate('Unit').exec();
+            console.log(worker)
+            return res.status(200).json({ accessToken, worker });
+        }
+
+        else
+        {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+
     }
-
-    else
+    catch (error)
     {
-        res.sendStatus(401);
+        console.error(error);
+
+        return res.status(500).json({ message: "Something went wrong" });
     }
 }
 
