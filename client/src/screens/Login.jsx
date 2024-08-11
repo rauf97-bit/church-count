@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import church from "../assets/images/church.png"
-import {useAuth, user} from "../context/AuthContext.js"
-import axios from "axios"
+import {useAuth} from "../context/AuthContext.js"
+// import axios from "axios"
 const Login = () => {
+  console.log(process.env.REACT_APP_API_BASE_URL);
+  // console.log(process.env.REACT_APP_BASE_PORT);
   //const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
+  const [err, setErr] = useState("");
   const {login} = useAuth()
   const [userData, setUserData] = useState({
     email: "",
@@ -28,12 +30,13 @@ const Login = () => {
     e.preventDefault()
     try {
       const loggedUser = await login(userData.email, userData.password)
-      // console.log(userData.email, userData.password);
+      console.log(userData.email, userData.password);
       navigate("/landing")
-      // console.log(loggedUser);
+      console.log(loggedUser);
     } catch (error) {
-      throw error
-      // console.log("Login failed, please try again after a while");
+      setErr(error)
+      console.log(error);
+      // throw error
     }
     
   };
@@ -47,8 +50,8 @@ const Login = () => {
             
             <div className="mx-auto sm:mt-3 w-11/12 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-4 md:mb-0">
               <form onSubmit={handleSubmit}>
-                {error && (
-                  <p className="bg-red-500 p-3 my-2 text-base ">{error}</p>
+                {err && (
+                  <p className="bg-red-500 p-3 my-2 text-base ">{err}</p>
                 )}
                 <p className="text-[24px] text-primaryTextColor text-center font-semibold my-10 sm:my-6 ">
                   Sign in

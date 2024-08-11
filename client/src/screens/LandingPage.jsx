@@ -9,12 +9,17 @@ import LandingCards from "../containers/LandingCards";
  import big_Attendance from "../assets/icons/big_Attendance.svg";
  import sm_Attendance from "../assets/icons/sm_Attendance.svg";
  import Wave from "../assets/icons/Wave.svg";
+ import {useAuth} from "../context/AuthContext.js"
+
 
 
 // import AttendanceModal from "../components/AttendanceModal";
 // import Itadori from "../assets/images/Itadori.jpg";
 // import Modal from "../containers/Modal";
 export const LandingPage = () => {
+  const {user} = useAuth()
+  console.table(user);
+  console.log(user.worker.FirstName);
   // const [showModal, setshowModal] = useState(false);
   // const [DisableBtn, setDisableBtn] = useState("false");
   // useState
@@ -25,7 +30,7 @@ export const LandingPage = () => {
       <div className="flex flex-col">
         <div className="h-[58vh] gap-2 justify-around flex flex-col px-4 pb-0 pt-3">
           <SearchHeader navIcon={false} title={"Home"} />
-          <p className="text-xl">Welcome, Hansi <img src={Wave} className="d inline" alt="Hi"/></p>
+          <p className="text-xl">Welcome, {user.worker.FirstName} <img src={Wave} className="d inline" alt="Hi"/></p>
           <p className="text-2xl">What would you love to do?</p>
           <div className="flex justify-between items-center gap-6">
 
