@@ -31,7 +31,7 @@ const Login = () => {
     try {
       const loggedUser = await login(userData.email, userData.password)
       console.log(userData.email, userData.password);
-      navigate("/landing")
+      navigate("/register")
       console.log(loggedUser);
     } catch (error) {
       setErr(error)
