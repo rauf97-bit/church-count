@@ -78,28 +78,28 @@ const handleWorkerLogin = async (req, res) =>
 
         if (match && foundUser.Role == "Worker")
         {
-            const accessToken = jwt.sign(
-                {
-                    UserInfo: {
-                        userId: foundUser._id,
-                        email: foundUser.Email
-                    }
-                },
+            // const accessToken = jwt.sign(
+            //     {
+            //         UserInfo: {
+            //             userId: foundUser._id,
+            //             email: foundUser.Email
+            //         }
+            //     },
 
-                process.env.ACCESS_TOKEN_WORKER,
-                { expiresIn: '30m' });
+            //     process.env.ACCESS_TOKEN_WORKER,
+            //     { expiresIn: '30m' });
 
-            // Set HTTP-only cookie with the token
-            res.cookie("accessToken", accessToken, {
-                //httpOnly: true,
-                //sameSite: "None",
-                //secure: true,
-                maxAge: 24 * 60 * 60 * 1000
-            });
+            // // Set HTTP-only cookie with the token
+            // res.cookie("accessToken", accessToken, {
+            //     //httpOnly: true,
+            //     //sameSite: "None",
+            //     //secure: true,
+            //     maxAge: 24 * 60 * 60 * 1000
+            // });
 
             const worker = await Worker.findOne({ Email: Email }).populate('Unit').exec();
             console.log(worker)
-            return res.status(200).json({ accessToken, worker });
+            return res.status(200).json({ worker });
         }
 
         else
