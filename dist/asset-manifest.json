@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/church-count/static/css/main.5522b093.css",
+    "main.js": "/church-count/static/js/main.9f45cfe1.js",
+    "static/media/churchfaded.png": "/church-count/static/media/churchfaded.c74e9cac3e996817cd7c.png",
+    "static/media/church.png": "/church-count/static/media/church.c3176ac1da0ec37b9e09.png",
+    "static/media/Wave.svg": "/church-count/static/media/Wave.002d780dcc707efb3d75cc9aae4eff6d.svg",
+    "static/media/big_Event.svg": "/church-count/static/media/big_Event.4b41d1c467966f293cb7f06565f186e8.svg",
+    "static/media/sm_Event.svg": "/church-count/static/media/sm_Event.35f0477bc0f10980824207966d2bf95b.svg",
+    "static/media/sm_Attendance.svg": "/church-count/static/media/sm_Attendance.45274614609108ad57090e4c690022b7.svg",
+    "static/media/big_Attendance.svg": "/church-count/static/media/big_Attendance.d2df856d781044b4461ca1eccb7aba0e.svg",
+    "static/media/big_Course.svg": "/church-count/static/media/big_Course.6923957d4f192941bdc252947b739469.svg",
+    "static/media/sm_Course.svg": "/church-count/static/media/sm_Course.7b415517f585b036141c339082f22fe5.svg",
+    "static/media/Frame 4.svg": "/church-count/static/media/Frame 4.c1163d8f7e66d0dcd76446a71a560f52.svg",
+    "index.html": "/church-count/index.html",
+    "main.5522b093.css.map": "/church-count/static/css/main.5522b093.css.map",
+    "main.9f45cfe1.js.map": "/church-count/static/js/main.9f45cfe1.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5522b093.css",
+    "static/js/main.9f45cfe1.js"
+  ]
+}
