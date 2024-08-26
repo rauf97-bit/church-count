@@ -101,10 +101,10 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     localStorage.removeItem("user");
   };
-
+  //!loading &&
   return (
     <UserContext.Provider value={{ user, loading, signUp, login, logout }}>
-      {!loading && children}
+      {children}  
     </UserContext.Provider>
   );
 };

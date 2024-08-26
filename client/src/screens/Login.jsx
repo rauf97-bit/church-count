@@ -1,19 +1,17 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import church from "../assets/images/church.png"
-import {UserAuth} from "../context/AuthContext"
+// import {UserAuth} from "../context/AuthContext"
+// import { AuthProvider } from "../context/AuthProvider";
 // import axios from "axios"
-const Login = () => {
-  //console.log(process.env.REACT_APP_API_BASE_URL);
-  // console.log(process.env.REACT_APP_BASE_PORT);
-  //const [email, setEmail] = useState("");
+const Login = ({login}) => {
   const [err, setErr] = useState("");
-  const {login} = UserAuth()
+  // const {login} = UserAuth()
   const [userData, setUserData] = useState({
     email: "",
     password:""
   });
-
+  // const { login } = AuthProvider()
   const navigate = useNavigate();
   const userHandler = (e) => {
     const { name, value } = e.target;
@@ -30,10 +28,12 @@ const Login = () => {
     e.preventDefault()
     
     try {
-      await login(userData.email, userData.password)
-      
+      if ( userData.email !== "" && userData.password !== "") {
+        await login(userData.email, userData.password)
+        navigate("/landing")
+        
+      }
       // console.log(userData.email, userData.password);
-      navigate("/landing")
       // console.log(loggedUser);
     } catch (error) {
       setErr(error)
@@ -44,7 +44,7 @@ const Login = () => {
   };
 
   
-  return (
+  return (  
     <div>
       <section className="h-screen overflow-scroll overflow-x-hidden">
         <div className="px-2 h-full text-gray-800">
